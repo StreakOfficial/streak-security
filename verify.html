@@ -1,1 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Streak Verification</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+body{
+  margin:0;
+  background:#050008;
+  color:white;
+  font-family:Arial;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+
+.box{
+  background:rgba(20,0,35,.6);
+  border:1px solid #d946ff;
+  border-radius:20px;
+  padding:30px;
+  width:340px;
+  text-align:center;
+  box-shadow:0 0 25px rgba(217,70,255,.25);
+}
+
+h1{
+  color:#d946ff;
+  margin-bottom:15px;
+}
+
+input{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border:none;
+  border-radius:10px;
+  outline:none;
+}
+
+button{
+  width:100%;
+  padding:12px;
+  margin-top:15px;
+  border:none;
+  border-radius:10px;
+  background:#d946ff;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#b02ee6;
+}
+
+.captcha{
+  margin-top:15px;
+  padding:15px;
+  border:1px dashed #d946ff;
+  border-radius:10px;
+  font-size:12px;
+  opacity:0.8;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+  <h1>VERIFY ACCOUNT</h1>
+
+  <p>Complete verification to continue</p>
+
+  <!-- CAPTCHA PLACEHOLDER -->
+  <div class="captcha">
+    CAPTCHA WILL GO HERE (Turnstile / hCaptcha later)
+  </div>
+
+  <input id="roblox" placeholder="Enter Roblox Username">
+
+  <button onclick="verify()">Complete Verification</button>
+</div>
+
+<script>
+function verify(){
+  const user = document.getElementById("roblox").value;
+
+  if(!user){
+    alert("Enter Roblox username");
+    return;
+  }
+
+  // sends to backend later (Render bot system)
+  fetch("https://streak-bot-5unt.onrender.com/verify", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({ roblox: user })
+  });
+
+  alert("Verification sent! You can return to Discord.");
+}
+</script>
+
+</body>
+</html>
