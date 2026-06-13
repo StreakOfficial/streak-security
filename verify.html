@@ -6,15 +6,25 @@
 
 <title>Streak Verification</title>
 
+<link rel="icon" type="image/png" href="favicon.png">
+
+<!-- CAPTCHA SCRIPT -->
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
 <style>
-body{
+*{
   margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
+
+body{
   height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
   background:#050008;
-  font-family:Arial;
   color:white;
   overflow:hidden;
 }
@@ -24,7 +34,7 @@ body::before{
   content:"";
   position:absolute;
   inset:0;
-  background:radial-gradient(circle at center, rgba(217,70,255,.15), transparent 60%);
+  background:radial-gradient(circle at center, rgba(217,70,255,.18), transparent 60%);
   pointer-events:none;
 }
 
@@ -33,15 +43,15 @@ body::before{
   width:360px;
   padding:30px;
   border-radius:20px;
-  background:rgba(20,0,35,.6);
-  border:1px solid rgba(217,70,255,.5);
+  background:rgba(20,0,35,.65);
+  border:1px solid rgba(217,70,255,.4);
   box-shadow:0 0 25px rgba(217,70,255,.25);
   text-align:center;
   position:relative;
   z-index:2;
 }
 
-/* animated border glow */
+/* animated border */
 .box::before{
   content:"";
   position:absolute;
@@ -61,29 +71,26 @@ body::before{
 }
 
 h1{
-  margin-bottom:10px;
   color:#d946ff;
   letter-spacing:3px;
+  margin-bottom:10px;
 }
 
 p{
-  opacity:0.7;
   font-size:13px;
+  opacity:0.7;
+  margin-bottom:20px;
 }
 
-/* captcha placeholder */
+/* captcha container */
 .captcha{
-  margin-top:20px;
-  padding:20px;
-  border:1px dashed rgba(217,70,255,.6);
-  border-radius:12px;
-  color:#dcb8ff;
-  font-size:12px;
+  display:flex;
+  justify-content:center;
+  margin-bottom:20px;
 }
 
 /* button */
 button{
-  margin-top:20px;
   width:100%;
   padding:12px;
   border:none;
@@ -98,6 +105,14 @@ button{
 button:hover{
   background:#b02ee6;
 }
+
+/* small text */
+small{
+  display:block;
+  margin-top:10px;
+  opacity:0.5;
+  font-size:11px;
+}
 </style>
 </head>
 
@@ -107,16 +122,32 @@ button:hover{
   <h1>STREAK VERIFY</h1>
   <p>Complete CAPTCHA to continue</p>
 
+  <!-- CAPTCHA -->
   <div class="captcha">
-    CAPTCHA (Cloudflare Turnstile goes here)
+    <div class="cf-turnstile" data-sitekey="YOUR_SITE_KEY"></div>
   </div>
 
   <button onclick="verify()">Verify</button>
+
+  <small>Secure verification by Streak</small>
 </div>
 
 <script>
 function verify(){
-  alert("Verification sent (backend will handle role later)");
+  const token = document.querySelector('[name="cf-turnstile-response"]').value;
+
+  if(!token){
+    alert("Please complete CAPTCHA");
+    return;
+  }
+
+  fetch("https://YOUR-RENDER-URL.onrender.com/verify", {
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({ captcha: token })
+  });
+
+  alert("Verification sent!");
 }
 </script>
 
