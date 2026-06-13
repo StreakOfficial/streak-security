@@ -5,7 +5,6 @@ body {
   color: white;
 }
 
-/* shared glow background */
 .bg-glow {
   position: fixed;
   inset: 0;
@@ -13,7 +12,6 @@ body {
   pointer-events: none;
 }
 
-/* buttons */
 button {
   background: #d946ff;
   border: none;
@@ -28,7 +26,6 @@ button:hover {
   background: #b02ee6;
 }
 
-/* animated border box */
 .box {
   background: rgba(20,0,35,0.7);
   border: 1px solid rgba(217,70,255,0.4);
