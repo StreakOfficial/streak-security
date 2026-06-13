@@ -1,153 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verify - Streak</title>
 
-<title>Streak Verification</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="favicon.png">
 
-<link rel="icon" type="image/png" href="favicon.png">
-
-<!-- CAPTCHA SCRIPT -->
+<!-- TURNSTILE SCRIPT -->
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
-<style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Arial,sans-serif;
-}
-
-body{
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background:#050008;
-  color:white;
-  overflow:hidden;
-}
-
-/* glowing background */
-body::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:radial-gradient(circle at center, rgba(217,70,255,.18), transparent 60%);
-  pointer-events:none;
-}
-
-/* main box */
-.box{
-  width:360px;
-  padding:30px;
-  border-radius:20px;
-  background:rgba(20,0,35,.65);
-  border:1px solid rgba(217,70,255,.4);
-  box-shadow:0 0 25px rgba(217,70,255,.25);
-  text-align:center;
-  position:relative;
-  z-index:2;
-}
-
-/* animated border */
-.box::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  border-radius:20px;
-  padding:1px;
-  background:linear-gradient(90deg,transparent,#7a1fff,#d946ff,#ffffff,#d946ff,transparent);
-  background-size:300% 100%;
-  animation:move 5s linear infinite;
-  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
-  -webkit-mask-composite:xor;
-}
-
-@keyframes move{
-  0%{background-position:300% 0}
-  100%{background-position:0 0}
-}
-
-h1{
-  color:#d946ff;
-  letter-spacing:3px;
-  margin-bottom:10px;
-}
-
-p{
-  font-size:13px;
-  opacity:0.7;
-  margin-bottom:20px;
-}
-
-/* captcha container */
-.captcha{
-  display:flex;
-  justify-content:center;
-  margin-bottom:20px;
-}
-
-/* button */
-button{
-  width:100%;
-  padding:12px;
-  border:none;
-  border-radius:10px;
-  background:#d946ff;
-  color:white;
-  font-weight:bold;
-  cursor:pointer;
-  transition:.2s;
-}
-
-button:hover{
-  background:#b02ee6;
-}
-
-/* small text */
-small{
-  display:block;
-  margin-top:10px;
-  opacity:0.5;
-  font-size:11px;
-}
-</style>
 </head>
 
 <body>
 
-<div class="box">
-  <h1>STREAK VERIFY</h1>
-  <p>Complete CAPTCHA to continue</p>
+<div class="bg-glow"></div>
 
-  <!-- CAPTCHA -->
-  <div class="captcha">
-    <div class="cf-turnstile" data-sitekey="YOUR_SITE_KEY"></div>
+<div style="display:flex;justify-content:center;align-items:center;height:100vh;">
+
+  <div class="box" style="text-align:center;width:350px;">
+
+    <h1>VERIFY</h1>
+    <p>Complete CAPTCHA to get access</p>
+
+    <!-- CAPTCHA -->
+    <div class="cf-turnstile"
+         data-sitekey="PASTE_SITE_KEY_HERE"></div>
+
+    <br>
+
+    <button onclick="verify()">Verify</button>
+
   </div>
 
-  <button onclick="verify()">Verify</button>
-
-  <small>Secure verification by Streak</small>
 </div>
 
 <script>
-function verify(){
+async function verify() {
+
   const token = document.querySelector('[name="cf-turnstile-response"]').value;
 
   if(!token){
-    alert("Please complete CAPTCHA");
+    alert("Complete CAPTCHA first");
     return;
   }
 
-  fetch("https://YOUR-RENDER-URL.onrender.com/verify", {
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({ captcha: token })
+  const res = await fetch("PASTE_RENDER_URL_HERE/verify", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({ captcha: token })
   });
 
-  alert("Verification sent!");
+  const data = await res.text();
+
+  alert(data);
 }
 </script>
 
