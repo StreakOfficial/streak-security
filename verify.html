@@ -6,7 +6,6 @@
 <link rel="stylesheet" href="style.css">
 <link rel="icon" href="favicon.png">
 
-<!-- TURNSTILE SCRIPT -->
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
 </head>
@@ -20,11 +19,11 @@
   <div class="box" style="text-align:center;width:350px;">
 
     <h1>VERIFY</h1>
-    <p>Complete CAPTCHA to get access</p>
+    <p>Complete CAPTCHA to get verified</p>
 
-    <!-- CAPTCHA -->
+    <!-- TURNSTILE -->
     <div class="cf-turnstile"
-         data-sitekey="PASTE_SITE_KEY_HERE"></div>
+         data-sitekey="0x4AAAAAADkLfLOqBpHWSsdME"></div>
 
     <br>
 
@@ -44,7 +43,7 @@ async function verify() {
     return;
   }
 
-  const res = await fetch("PASTE_RENDER_URL_HERE/verify", {
+  const res = await fetch("https://streak-api-ojbd.onrender.com", {
     method: "POST",
     headers: {"Content-Type":"application/json"},
     body: JSON.stringify({ captcha: token })
