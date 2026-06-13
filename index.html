@@ -1,1 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Streak Verification</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  background:#050008;
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+
+.box{
+  background:rgba(20,0,35,.6);
+  padding:30px;
+  border-radius:20px;
+  border:1px solid #d946ff;
+  width:320px;
+  text-align:center;
+  box-shadow:0 0 25px rgba(217,70,255,.2);
+}
+
+h1{
+  color:#d946ff;
+  margin-bottom:20px;
+  letter-spacing:2px;
+}
+
+input{
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  border:none;
+  outline:none;
+  margin-bottom:15px;
+}
+
+button{
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  border:none;
+  background:#d946ff;
+  color:white;
+  cursor:pointer;
+  font-weight:bold;
+  transition:.2s;
+}
+
+button:hover{
+  background:#b02ee6;
+}
+
+small{
+  display:block;
+  margin-top:10px;
+  opacity:0.6;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+  <h1>STREAK VERIFY</h1>
+
+  <input id="roblox" placeholder="Enter Roblox Username">
+
+  <button onclick="verify()">Verify</button>
+
+  <small>Make sure your Roblox username is correct</small>
+</div>
+
+<script>
+function verify(){
+  const name = document.getElementById("roblox").value;
+
+  if(!name){
+    alert("Enter a username");
+    return;
+  }
+
+  // TEMP: sends to backend later
+  window.location.href = `https://your-backend-url.com/verify?user=${name}`;
+}
+</script>
+
+</body>
+</html>
