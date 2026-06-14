@@ -7,7 +7,6 @@
 <link rel="icon" href="favicon.png">
 
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-
 </head>
 
 <body>
@@ -38,19 +37,22 @@ async function verify() {
 
   const token = document.querySelector('[name="cf-turnstile-response"]').value;
 
-  if(!token){
+  if (!token) {
     alert("Complete CAPTCHA first");
     return;
   }
 
-  const res = await fetch("https://streak-api-ojbd.onrender.com", {
+  const res = await fetch("https://streak-api-ojbd.onrender.com/verify", {
     method: "POST",
-    headers: {"Content-Type":"application/json"},
-    body: JSON.stringify({ captcha: token })
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      captcha: token
+    })
   });
 
   const data = await res.text();
-
   alert(data);
 }
 </script>
